@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Return Books</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/return.css}">
+  <style>
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+    }
+
+    .returns-table {
+      width: 100%;
+      min-width: 800px;
+      border-collapse: collapse;
+    }
+
+    .returns-table th,
+    .returns-table td {
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .status-ontime {
+      background-color: #7fffd4;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .status-overdue {
+      background-color: #ff7f7f;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4>Admin Panel</h4>
+    <a th:href="@{/admin/dashboard}">Dashboard</a>
+    <a th:href="@{/admin/books}">Books</a>
+    <a th:href="@{/admin/members}">Members</a>
+    <a th:href="@{/admin/issue}">Issue Books</a>
+    <a href="#" class="active">Return Books</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+
+    <!-- Top Navbar -->
+    <div class="topnav">
+      <h2>Book Returns Management</h2>
+      <div class="nav-links">
+        <a href="#">Admin</a>
+        <a th:href="@{/logout}">Logout</a>
+      </div>
+    </div>
+
+    <!-- Return Book Section -->
+    <div class="return-section">
+      <!-- Return Form -->
+      <div class="card return-form-card">
+        <h3>Return a Book</h3>
+
+        <form th:action="@{/admin/return}" method="post" class="return-form">
+          <div class="form-group">
+            <label for="loanId">Select Issued Book</label>
+            <select id="loanId" name="loanId" class="form-control" required onchange="updateReturnDate()">
+              <option value="">Select Issued Book</option>
+              <option th:each="loan : ${loans}" th:value="${loan.id}"
+                th:data-due-date="${#temporals.format(loan.dueDate, 'yyyy-MM-dd')}"
+                th:text="${loan.book.title + ' (Issued to: ' + loan.member.name + ')'}">
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="returnDate">Return Date</label>
+            <input type="date" id="returnDate" name="returnDate" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="fineAmount">Fine Amount (if applicable)</label>
+            <input type="number" id="fineAmount" name="fineAmount" class="form-control" placeholder="0.00" step="0.01"
+              min="0">
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" class="form-control" rows="3"
+              placeholder="Any additional notes..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-return">Process Return</button>
+        </form>
+      </div>
+
+      <!-- Recent Returns -->
+      <div class="card recent-returns-card">
+        <h3>Recent Returns</h3>
+
+        <div class="table-responsive">
+          <table class="returns-table">
+            <thead>
+              <tr>
+                <th>Return ID</th>
+                <th>Book</th>
+                <th>Member</th>
+                <th>Issued On</th>
+                <th>Returned On</th>
+                <th>Fine</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="returnItem : ${returnHistories}">
+                <td th:text="${returnItem.id}">RET-1001</td>
+                <td th:text="${returnItem.bookTitle}">The Great Gatsby</td>
+                <td th:text="${returnItem.memberName}">John Doe</td>
+                <td th:text="${#temporals.format(returnItem.issueDate, 'yyyy-MM-dd')}">2023-05-15</td>
+                <td th:text="${#temporals.format(returnItem.returnDate, 'yyyy-MM-dd')}">2023-06-10</td>
+                <td
+                  th:text="${returnItem.fineAmount != null && returnItem.fineAmount > 0 ? '$' + returnItem.fineAmount : 'None'}">
+                  $5.00</td>
+                <td>
+                  <span th:if="${returnItem.returnDate.isAfter(returnItem.dueDate)}" class="status-overdue">Late</span>
+                  <span th:unless="${returnItem.returnDate.isAfter(returnItem.dueDate)}" class="status-ontime">On
+                    Time</span>
+                </td>
+              </tr>
+              <tr th:if="${returnHistories == null or #lists.isEmpty(returnHistories)}">
+                <td colspan="7">No recent returns found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateReturnDate() {
+      const select = document.getElementById('loanId');
+      const selectedOption = select.options[select.selectedIndex];
+      const dueDateStr = selectedOption.getAttribute('data-due-date');
+      const dueDate = new Date(dueDateStr);
+      const today = new Date();
+      const returnInput = document.getElementById('returnDate');
+      const fineInput = document.getElementById('fineAmount');
+
+      // Set return date to today
+      returnInput.value = today.toISOString().split('T')[0];
+
+      // Compare dates and calculate fine
+      const finePerDay = 10; // Customize per your policy
+      if (today > dueDate) {
+        const diffTime = today - dueDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        fineInput.value = diffDays * finePerDay;
+      } else {
+        fineInput.value = 0;
+      }
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add New Book</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/books.css}">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4>Admin Panel</h4>
+    <a th:href="@{/admin/dashboard}">Dashboard</a>
+    <a th:href="@{/admin/books}">Books</a>
+    <a th:href="@{/admin/members}">Members</a>
+    <a th:href="@{/admin/issue}">Issue Books</a>
+    <a th:href="@{/admin/return}">Return Books</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    
+    <!-- Top Navbar -->
+    <div class="topnav">
+      <h2>Quick Borrow</h2>
+      <div class="nav-links">
+        <a href="#">Admin</a>
+        <a th:href="@{/logout}">Logout</a>
+      </div>
+    </div>
+
+    <!-- Add Book Form -->
+    <div class="add-book-section">
+      <div class="card">
+        <div class="section-header">
+          <h3>Book Information</h3>
+          <a th:href="@{/admin/books}" class="btn btn-secondary">Back to Books</a>
+        </div>
+        <form th:action="@{/admin/books/add-book}" th:object="${book}" method="post" class="book-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="title">Title *</label>
+              <input type="text" id="title" th:field="*{title}" class="form-control" required>
+              <small class="form-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+            </div>
+            
+            <div class="form-group">
+              <label for="author">Author *</label>
+              <input type="text" id="author" th:field="*{author}" class="form-control" required>
+              <small class="form-error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></small>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="isbn">ISBN *</label>
+              <input type="text" id="isbn" th:field="*{isbn}" class="form-control" required>
+              <small class="form-error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></small>
+            </div>
+            
+            <div class="form-group">
+              <label for="publisher">Publisher</label>
+              <input type="text" id="publisher" th:field="*{publisher}" class="form-control">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="publicationDate">Publication Date</label>
+              <input type="date" id="publicationDate" th:field="*{publicationDate}" class="form-control">
+            </div>
+            
+            <div class="form-group">
+              <label for="category">Category *</label>
+              <select id="category" th:field="*{category}" class="form-control" required>
+                <option value="">Select Category</option>
+                <option th:each="cat : ${categories}" 
+                        th:value="${cat}"
+                        th:text="${cat}">
+                </option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="language">Language *</label>
+              <select id="language" th:field="*{language}" class="form-control" required>
+                <option value="">Select Language</option>
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Spanish">Spanish</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+                <option value="Other">Other</option>
+              </select>
+              <small class="form-error" th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></small>
+            </div>
+            
+            <div class="form-group">
+              <label for="totalCopies">Total Copies *</label>
+              <input type="number" id="totalCopies" th:field="*{totalCopies}" class="form-control" min="1" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="availableCopies">Available Copies *</label>
+              <input type="number" id="availableCopies" th:field="*{availableCopies}" class="form-control" min="0" required>
+            </div>
+            
+            <div class="form-group">
+              <!-- Empty div for layout balance -->
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="reset" class="btn btn-reset">Clear</button>
+            <button type="submit" class="btn btn-submit">Add Book</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

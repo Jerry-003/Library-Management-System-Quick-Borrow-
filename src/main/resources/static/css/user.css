@@ -1,0 +1,240 @@
+body {
+	background-image: url('https://gen.jpn.com/en/wp-content/uploads/2023/03/AdobeStock_564832623-edited-scaled.jpeg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 40px;
+	padding-top: 75px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #333;
+		line-height: 1.6;
+		animation: fadeIn 0.5s ease-in;
+	}
+
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Header */
+.header {
+	 background: linear-gradient(to left, rgb(128, 128, 128), rgb(0, 0, 0));
+	color: white;
+	padding: 1rem 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(6px);
+}
+
+.header h2 {
+	margin: 0;
+	font-size: 1.6rem;
+	text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.header-links {
+	display: flex;
+	gap: 1.5rem;
+}
+
+.header a {
+	color: white;
+	text-decoration: none;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.header a::after {
+	content: '';
+	position: absolute;
+	width: 0%;
+	height: 2px;
+	bottom: -4px;
+	left: 0;
+	background-color: #3498db;
+	transition: width 0.3s ease;
+}
+
+.header a:hover::after {
+	width: 100%;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 2rem auto;
+	padding: 0 1rem;
+}
+
+/* Book Grid */
+.book-list {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+}
+
+/* Book Card */
+.book-card {
+  position: relative;
+  background: linear-gradient(145deg, #f0f4ff, #ffffff);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 2px solid transparent;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+  box-shadow:
+    0 0 15px rgba(52, 152, 219, 0.3),
+    0 8px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  z-index: 0;
+}
+
+/* Glowing border effect */
+.book-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  padding: 2px;
+  background: linear-gradient(130deg, #3498db, #2ecc71, #e74c3c);
+  background-size: 300% 300%;
+  animation: glowingBorder 8s linear infinite;
+  z-index: -1;
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+}
+
+@keyframes glowingBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.book-card:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 25px rgba(52, 152, 219, 0.6),
+    0 10px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(52, 152, 219, 0.3);
+}
+
+
+.book-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.3rem;
+}
+
+.book-author {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Glowing Tags */
+.book-category, .book-language {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.book-category {
+  background: rgb(128, 128, 128);
+  box-shadow: 0 0 12px rgba(52, 152, 219, 0.6);
+}
+
+.book-language {
+  background: rgb(192, 192, 192);
+  color: black;
+  box-shadow: 0 0 12px rgba(52, 152, 219, 0.6);
+  }
+
+.book-status {
+  margin-top: 1rem;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: rgb(64, 128, 128);
+  color: rgb(255, 255, 255);
+  box-shadow: 0 0 14px rgb(128, 128, 128);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.book-status:hover {
+  transform: scale(1.05);
+  background: #27ae60;
+}
+
+/* Optional button styles for interaction */
+.book-card a.button {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #3498db;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 0 14px rgba(52, 152, 219, 0.5);
+}
+
+.book-card a.button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+
+/* Empty State */
+.empty-state {
+	grid-column: 1/-1;
+	text-align: center;
+	padding: 3rem;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+	backdrop-filter: blur(6px);
+}
+
+.empty-state p {
+	color: #7f8c8d;
+	font-size: 1.1rem;
+	margin-bottom: 1.5rem;
+}
+
+.empty-state a {
+	color: #3498db;
+	text-decoration: none;
+	font-weight: 600;
+	transition: color 0.3s;
+}
+
+.empty-state a:hover {
+	color: #1f78c1;
+}

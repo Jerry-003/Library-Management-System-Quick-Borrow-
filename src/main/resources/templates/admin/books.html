@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library Books</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/books.css}">
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4>Admin Panel</h4>
+    <a th:href="@{/admin/dashboard}">Dashboard</a>
+    <a href="#" class="active">Books</a>
+    <a th:href="@{/admin/members}">Members</a>
+    <a th:href="@{/admin/issue}">Issue Books</a>
+    <a th:href="@{/admin/return}">Return Books</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+
+    <!-- Top Navbar -->
+    <div class="topnav">
+      <h2> Books Management</h2>
+      <div class="nav-links">
+        <a href="#">Admin</a>
+        <a th:href="@{/logout}">Logout</a>
+      </div>
+    </div>
+
+    <!-- Book Management Section -->
+    <div class="book-management">
+      <div class="section-header">
+        <h3>Book Inventory</h3>
+        <a th:href="@{/admin/books/add-book}" class="btn btn-primary">Add New Book</a>
+      </div>
+
+      <!-- Search and Filter -->
+      <!-- <div class="search-filter">
+        <input type="text" placeholder="Search books..." class="search-input">
+        <select class="filter-select">
+          <option>All Categories</option>
+          <option>Fiction</option>
+          <option>Non-Fiction</option>
+          <option>Science</option>
+          <option>Literature</option>
+        </select>
+        <button class="btn btn-search">Search</button>
+      </div> -->
+
+      <!-- Books Table -->
+      <table class="books-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Total Books</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="book : ${books}">
+            <td th:text="${book.id}">1</td>
+            <td th:text="${book.title}">The Great Gatsby</td>
+            <td th:text="${book.author}">F. Scott Fitzgerald</td>
+            <td th:text="${book.isbn}">9780743273565</td>
+            <td th:text="${book.category}">Literature</td>
+            <td>
+              <span th:if="${book.available}" class="status-available">Available</span>
+              <span th:unless="${book.available}" class="status-unavailable">Checked Out</span>
+            </td>
+            <td th:text="${book.totalCopies}">5</td>
+            <td>
+              <!-- <a th:href="@{'/admin/books/edit-book/' + ${book.id}}" class="btn btn-edit">Edit</a> -->
+              <a th:href="@{'/admin/books/edit-book?bookId=' + ${book.id}}" class="btn btn-edit">Edit</a>
+              <a th:href="@{'/admin/delete-book?bookId=' + ${book.id}}" class="btn btn-delete">Delete</a>
+            </td>
+          </tr>
+          <tr th:if="${books == null or #lists.isEmpty(books)}">
+            <td colspan="7">No books found in the library</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <!-- <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">&raquo;</a>
+      </div> -->
+    </div>
+
+  </div>
+</body>
+
+</html>

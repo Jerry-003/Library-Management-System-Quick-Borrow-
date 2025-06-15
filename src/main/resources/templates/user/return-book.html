@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Return History - Library System</title>
+  <link rel="stylesheet" th:href="@{/css/return-book.css}">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h2>Quick Borrow</h2>
+        <div class="header-links">
+      <a th:href="@{/}">Home</a>
+      <a th:href="@{/profile}">Profile</a>
+      <a th:href="@{/logout}">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="page-header">
+      <h1>Return History</h1>
+      <p>View your book return history</p>
+    </div>
+
+    <section class="history-section">
+      <h2>Your Return History</h2>
+      
+      <div th:if="${returnHistory.empty}" class="no-history">
+        <p>You have no return history yet.</p>
+        <a th:href="@{/view-books}" class="btn btn-primary">Browse Books</a>
+      </div>
+
+      <table th:unless="${returnHistory.empty}" class="history-table">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="history : ${returnHistory}">
+            <td th:text="${history.bookTitle}">Book Title</td>
+            <td th:text="${history.bookAuthor}">Author Name</td>
+            <td th:text="${#temporals.format(history.issueDate, 'dd MMM yyyy')}">01 Jan 2023</td>
+            <td th:text="${history.returnDate != null} ? 
+                         ${#temporals.format(history.returnDate, 'dd MMM yyyy')} : 'Not returned'">
+              Return Date
+            </td>
+            <td>
+              <span th:classappend="${history.status.name() == 'RETURNED'} ? 'status returned' : 'status overdue'"
+                    th:text="${history.status.name() == 'RETURNED'} ? 'Returned' : 'Overdue'">
+                Status
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

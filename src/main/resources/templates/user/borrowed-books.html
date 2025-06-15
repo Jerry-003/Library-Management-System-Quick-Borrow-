@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Return History - Library System</title>
+    <link rel="stylesheet" th:href="@{/css/return-book.css}">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h2>Quick Borrow</h2>
+        <div class="header-links">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/profile}">Profile</a>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-header">
+            <h1>Borrowed Books</h1>
+            <p>View your Borrowed Books</p>
+        </div>
+
+        <section class="history-section">
+            <h2>Your Borrowed Books</h2>
+
+            <!-- <div th:if="${#lists.isEmpty(loan)}" class="no-history">
+                <p>You have no Book Borrowed yet.</p>
+                <a th:href="@{/borrowed-book}" class="btn btn-primary">Browse Books</a>
+            </div> -->
+
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>Borrow Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="currentLoan : ${loans}">
+                        <td th:text="${currentLoan.book.title}">Book Title</td>
+                        <td th:text="${currentLoan.book.author}">Author Name</td>
+                        <td th:text="${#temporals.format(currentLoan.issueDate, 'dd MMM yyyy')}">01 Jan 2023</td>
+                        <td th:text="${currentLoan.returnDate != null} ? 
+                         ${#temporals.format(currentLoan.returnDate, 'dd MMM yyyy')} : 'Not returned'">
+                            Return Date
+                        </td>
+                        <td>
+                            <span
+                                th:classappend="${currentLoan.status.name() == 'RETURNED'} ? 'status returned' : 'status overdue'"
+                                th:text="${currentLoan.status.name()}">
+                                Status
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>

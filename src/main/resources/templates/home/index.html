@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Home - Quick Borrow</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h2>Quick Borrow</h2>
+    <div class="navbar-links">
+      <a th:if="${session.loggedInUser != null}" th:href="@{/profile}">Profile</a>
+      <a th:if="${session.loggedInUser != null}" th:href="@{/logout}">Logout</a>
+
+      <!-- Show 'Login' if user is not logged in -->
+      <a th:if="${session.loggedInUser == null}" th:href="@{/login}">Login</a>
+	  <a th:if="${session.loggedInUser == null}" th:href="@{/login}">Admin Login</a>
+    </div>
+  </div>
+
+  <!-- Welcome Section -->
+  <div class="welcome">
+    <h1>Welcome to Quick Borrow – Your Digital Library Companion! Hey!!<span th:text="${session.loggedInUser?.name} ?: 'Guest'">User</span></h1>
+    <p>We're delighted to have you here.
+		Explore a vast collection of books, and stay updated with the latest arrivals-all at your fingertips.</p>
+  </div>
+
+  <!-- Action Cards -->
+  <div class="actions">
+    <div class="card">
+      <h3>View Books</h3>
+      <p>Browse the entire collection of available books.</p>
+      <a th:href="@{/view-books}">Browse Books</a>
+    </div>
+
+    <div class="card">
+      <h3>Borrowed Books</h3>
+      <p>Check the books you've currently borrowed.</p>
+      <a th:href="@{/borrowed-book}">View Borrowed</a>
+    </div>
+
+    <div class="card">
+      <h3>Return History</h3>
+      <p>See the books you've returned previously.</p>
+      <a th:href="@{/return-book}">View History</a>
+    </div>
+
+    <!-- <div class="card">
+      <h3>Update Profile</h3>
+      <p>Edit your personal information and contact details.</p>
+      <a th:href="@{/user/profile/edit}">Edit Profile</a>
+    </div> -->
+  </div>
+
+</body>
+
+</html>

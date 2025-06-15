@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2> User Profile</h2>
+        <div class="navbar-links">
+            <a th:href="@{/}">Dashboard</a>
+            <!-- <a th:href="@{/user/books}">Books</a> -->
+            <!-- <a th:href="@{/logout}">Logout</a> -->
+        </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="profile-container">
+        <div class="profile-card">
+            <!-- Profile Sidebar -->
+            <div class="profile-sidebar">
+                <div class="profile-avatar">
+                    <span th:text="${session.loggedInUser.name.substring(0,1).toUpperCase()}">U</span>
+                </div>
+                <h3 th:text="${session.loggedInUser.name}">User</h3>
+                <p th:text="${session.loggedInUser.email}">user@example.com</p>
+            </div>
+
+            <!-- Profile Main Content -->
+            <div class="profile-main">
+                <h3 class="profile-title">User Details</h3>
+                <ul class="user-details">
+                    <li><strong>Name:</strong> <span th:text="${session.loggedInUser.name}">John Doe</span></li>
+                    <li><strong>Email:</strong> <span
+                            th:text="${session.loggedInUser.email}">john.doe@example.com</span></li>
+                  <!--  <li><strong>Books Borrowed:</strong> <span th:text="${currentLoans} + ' currently'">2
+                            currently</span></li> -->
+                </ul>
+
+                <div class="profile-actions">
+                    <!-- <a th:href="@{/update-profile}" class="btn btn-primary">Edit Profile</a> -->
+                    <a th:href="@{/logout}" class="btn btn-logout">Logout</a>
+                    <!-- <a th:href="@{/user/delete-profile}" class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                        Delete Account
+                    </a> -->
+                </div>
+
+                <div th:if="${param.updated}" class="alert success-alert">
+                    Profile updated successfully!
+                </div>
+                <div th:if="${param.deleted}" class="alert error-alert">
+                    Account deleted successfully!
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

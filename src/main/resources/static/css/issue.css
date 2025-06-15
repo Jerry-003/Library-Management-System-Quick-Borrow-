@@ -1,0 +1,258 @@
+/* General Reset & Layout */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #e9ecef;
+  box-sizing: border-box;
+}
+
+/* Issue Book Section */
+.issue-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+/* Card Styling */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+  color: #343a40;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Table Container */
+.table-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 100%;
+}
+
+/* Issued Books Table */
+.issued-books-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  min-width: 800px; /* Ensures horizontal scroll on small screens */
+}
+
+.issued-books-table th,
+.issued-books-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.issued-books-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.issued-books-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Status Indicators */
+.status-active {
+  color: rgb(0, 255, 255);
+  background-color: rgb(64, 128, 128);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-overdue {
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Form Styles */
+.issue-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-issue {
+  background-color: rgb(128, 128, 128);
+  color: white;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+  max-width: 200px;
+  margin-top: -30px;
+  padding: 10px 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.btn-issue:hover {
+  background-color: rgb(128, 128, 128);
+  box-shadow: 0 0 15px rgb(128, 128, 128);
+  text-shadow: 0 0 8px rgb(255, 255, 255), 0 0 16px rgb(192, 192, 192);
+  transform: translateY(-3px);
+}
+
+.btn-search {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-search:hover {
+  background-color: #138496;
+}
+
+/* Search and Filter */
+.search-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.pagination a {
+  color: #007bff;
+  padding: 8px 12px;
+  text-decoration: none;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.pagination a:hover {
+  background-color: #f8f9fa;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .issue-form {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-issue {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .issued-books-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .search-filter {
+    flex-direction: column;
+  }
+
+  .btn-search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 15px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+}

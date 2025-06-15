@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library System - Register</title>
+  <link rel="stylesheet" th:href="@{/css/register.css}">
+</head>
+<body>
+
+  <!-- Register Container -->
+  <div class="register-container">
+    <div class="register-header">
+      <h2>Create Account</h2>
+      <p>Join our library community</p>
+    </div>
+    
+    <form th:action="@{/register}" th:object="${user}" method="post">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" th:field="*{name}" required>
+        <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" th:field="*{email}" required>
+        <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" th:field="*{password}" required>
+        <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirmPassword" th:field="*{confirmPassword}" required>
+        <span class="error-message" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
+        <span class="password-match" id="passwordMatchMessage" style="display:none;">Passwords match!</span>
+      </div>
+      
+      <button type="submit" class="register-btn">Register</button>
+      
+      <div class="login-link">
+        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Simple password match validation
+    document.addEventListener('DOMContentLoaded', function() {
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirm_password');
+      const message = document.getElementById('passwordMatchMessage');
+      
+      function checkPasswordMatch() {
+        if (password.value && confirmPassword.value) {
+          if (password.value === confirmPassword.value) {
+            message.style.display = 'block';
+            message.style.color = '#2ecc71';
+            message.textContent = 'Passwords match!';
+          } else {
+            message.style.display = 'block';
+            message.style.color = '#e74c3c';
+            message.textContent = 'Passwords do not match!';
+          }
+        } else {
+          message.style.display = 'none';
+        }
+      }
+      
+      password.addEventListener('input', checkPasswordMatch);
+      confirmPassword.addEventListener('input', checkPasswordMatch);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library Books</title>
+  <link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h2>Library Books</h2>
+    <div class="header-links">
+      <a th:href="@{/}">Home</a>
+      <a th:href="@{/profile}">Profile</a>
+      <a th:href="@{/logout}">Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="book-list">
+      <!-- Book Cards -->
+      <div class="book-card" th:each="book : ${books}">
+        <div class="book-info">
+          <h3 class="book-title" th:text="${book.title}"></h3>
+          <p class="book-author" th:text="'by ' + ${book.author}"></p>
+          <div class="book-meta">
+            <span class="book-category" th:text="${book.category}"></span>
+            <span class="book-language" th:text="${book.language}"></span>
+          </div>
+          <div th:class="${book.availableCopies > 0} ? 'book-status available' : 'book-status unavailable'">
+            <span th:text="${book.availableCopies > 0} ? 'Available (' + ${book.availableCopies} + ')' : 'Checked Out'"></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Empty State -->
+      <div class="empty-state" th:if="${books.empty}">
+        <h3>No Books Available</h3>
+        <p>There are currently no books in the library.</p>
+        <a th:href="@{/user/dashboard}">Return to Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

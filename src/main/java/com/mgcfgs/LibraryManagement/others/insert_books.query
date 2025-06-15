@@ -1,0 +1,72 @@
+INSERT INTO books (
+    title,
+    author,
+    isbn,
+    publisher,
+    publication_date,
+    category,
+    language,
+    total_copies,
+    available_copies,
+    description
+) VALUES
+(
+    'Clean Code',
+    'Robert C. Martin',
+    '9780132350884',
+    'Prentice Hall',
+    '2008-08-01',
+    'Programming',
+    'English',
+    10,
+    10,
+    'A Handbook of Agile Software Craftsmanship.'
+),
+(
+    'Effective Java',
+    'Joshua Bloch',
+    '9780134685991',
+    'Addison-Wesley',
+    '2018-01-06',
+    'Programming',
+    'English',
+    8,
+    8,
+    'Best practices for the Java programming language.'
+),
+(
+    'Introduction to Algorithms',
+    'Thomas H. Cormen',
+    '9780262033848',
+    'MIT Press',
+    '2009-07-31',
+    'Algorithms',
+    'English',
+    5,
+    5,
+    'Widely used textbook on algorithms.'
+),
+(
+    'The Pragmatic Programmer',
+    'Andrew Hunt',
+    '9780201616224',
+    'Addison-Wesley',
+    '1999-10-30',
+    'Software Engineering',
+    'English',
+    7,
+    7,
+    'Your journey to mastery as a modern software developer.'
+),
+(
+    'Head First Design Patterns',
+    'Eric Freeman',
+    '9780596007126',
+    'O\'Reilly Media',
+    '2004-10-25',
+    'Design Patterns',
+    'English',
+    6,
+    6,
+    'A brain-friendly guide to design patterns in Java.'
+);
